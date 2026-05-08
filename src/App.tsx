@@ -453,25 +453,25 @@ function PracticeClosed({ questions, theme, onFinish }: { questions: any[], them
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl border-2 border-green-200 overflow-hidden max-w-3xl mx-auto">
-      <div className="p-4 bg-green-50 border-b border-green-200 flex justify-between font-bold text-xs text-green-800 uppercase tracking-widest">
+    <div className="bg-white rounded-2xl shadow-xl border-2 border-green-200 overflow-hidden max-w-2xl mx-auto">
+      <div className="p-2 bg-green-50 border-b border-green-200 flex justify-between font-bold text-[10px] text-green-800 uppercase tracking-widest">
         <span>שאלה {qIndex + 1} מתוך {questions.length}</span>
         <span className={`${theme.text}`}>אסטרטגיית אלימינציה</span>
       </div>
       
-      <div className="p-8 bg-white border-b border-green-100 shadow-sm relative z-10">
-        <h3 className="text-xl font-bold text-green-900 leading-relaxed text-right">{q.text}</h3>
+      <div className="p-4 md:p-5 bg-white border-b border-green-50 shadow-sm">
+        <h3 className="text-base md:text-lg font-bold text-green-900 leading-snug text-right">{q.text}</h3>
       </div>
       
-      <div className="p-8 bg-[#FBFDFB]">
+      <div className="p-4 md:p-6 bg-[#FBFDFB]">
         {step === 1 && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-            <div className={`border-2 ${theme.border} ${theme.bg} rounded-2xl p-8 mb-8 shadow-inner`}>
-              <Eye className={`w-12 h-12 ${theme.text} mx-auto mb-4`} />
-              <h4 className="text-xl font-black text-green-900 mb-2">המסיחים מוסתרים במכוון!</h4>
-              <p className="text-green-800 mb-8 font-medium">כדי לא להתבלבל, נסו לענות על השאלה בראש קודם.</p>
+            <div className={`border-2 ${theme.border} ${theme.bg} rounded-xl p-6 mb-6 shadow-inner`}>
+              <Eye className={`w-8 h-8 ${theme.text} mx-auto mb-3`} />
+              <h4 className="text-base font-black text-green-900 mb-1">המסיחים מוסתרים במכוון</h4>
+              <p className="text-[11px] text-green-800 mb-6 font-bold text-center">כדי לא להתבלבל, נסו לענות על השאלה בראש קודם.</p>
               <textarea 
-                className="w-full p-4 rounded-xl border-2 border-white focus:border-green-400 outline-none resize-none shadow-md text-green-900 font-medium" 
+                className="w-full p-3 rounded-lg border border-white focus:border-green-400 outline-none resize-none shadow-md text-green-900 font-bold text-sm" 
                 rows={2} 
                 placeholder="לדעתי התשובה היא..." 
                 value={mentalGuess} 
@@ -480,7 +480,7 @@ function PracticeClosed({ questions, theme, onFinish }: { questions: any[], them
             </div>
             <button 
               onClick={() => setStep(2)} 
-              className={`w-full ${theme.primary} ${theme.hover} text-white font-bold py-5 rounded-2xl shadow-xl transition-all text-xl border-b-4 border-green-950 active:border-b-0 active:translate-y-1`}
+              className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-lg transition-all text-sm border-b-4 border-green-950 active:border-b-0 active:translate-y-1`}
             >
               כתבתי, הראה לי מסיחים
             </button>
@@ -488,28 +488,28 @@ function PracticeClosed({ questions, theme, onFinish }: { questions: any[], them
         )}
 
         {step >= 2 && (
-          <div className="animate-slide-up">
-            <div className="space-y-4 mb-10">
+          <div className="space-y-3">
+            <div className="grid grid-cols-1 gap-2">
               {shuffledOptions.map((opt: any, idx: number) => {
                 const isEliminated = eliminated[idx];
                 const isSelected = selected === idx;
                 const showResults = step === 3;
                 
-                let boxStyle = "relative flex items-center border-2 rounded-2xl p-5 transition-all duration-300 ";
-                let textStyle = "flex-grow text-lg pr-12 transition-all ";
+                let boxStyle = "relative flex items-center border-2 rounded-xl p-3 transition-all duration-300 min-h-[50px] ";
+                let textStyle = "flex-grow text-sm pr-10 transition-all ";
 
                 if (showResults) {
-                  if (opt.isCorrect) boxStyle += "bg-green-100 border-green-500 shadow-md ring-2 ring-green-200";
-                  else if (isSelected) boxStyle += "bg-red-50 border-red-500 shadow-sm";
-                  else boxStyle += "bg-gray-50 border-gray-200 opacity-50";
-                  textStyle += (opt.isCorrect ? "font-black text-green-900" : isSelected ? "font-bold text-red-900" : "text-gray-500");
+                  if (opt.isCorrect) boxStyle += "bg-green-50 border-green-500 shadow-sm ring-1 ring-green-100";
+                  else if (isSelected) boxStyle += "bg-red-50 border-red-400";
+                  else boxStyle += "bg-gray-50 border-gray-100 opacity-60";
+                  textStyle += (opt.isCorrect ? "font-black text-green-900" : isSelected ? "font-bold text-red-900" : "text-gray-400");
                 } else {
                   if (isEliminated) { 
-                    boxStyle += "bg-gray-100 border-gray-200 opacity-40 shadow-none"; 
+                    boxStyle += "bg-gray-50 border-gray-100 opacity-40 shadow-none"; 
                     textStyle += "line-through text-gray-400"; 
                   }
                   else { 
-                    boxStyle += `bg-white border-green-100 hover:border-green-500 cursor-pointer shadow-sm hover:shadow-lg hover:-translate-y-0.5`; 
+                    boxStyle += `bg-white border-green-50 hover:border-green-400 cursor-pointer shadow-sm hover:shadow-md`; 
                     textStyle += "text-slate-700 font-bold";
                   }
                 }
@@ -524,14 +524,14 @@ function PracticeClosed({ questions, theme, onFinish }: { questions: any[], them
                     {!showResults && (
                       <button 
                         onClick={(e) => { e.stopPropagation(); setEliminated(p => ({...p, [idx]: !p[idx]})); }} 
-                        className={`absolute left-4 p-2 rounded-xl transition-all z-10 ${isEliminated ? 'bg-gray-300 text-white' : 'bg-red-50 text-red-500 hover:bg-red-500 hover:text-white shadow-sm'}`} 
-                        title="מחק מסיח זה (אלימינציה)"
+                        className={`absolute left-3 p-1.5 rounded-lg transition-all z-10 ${isEliminated ? 'bg-gray-300 text-white' : 'bg-red-50 text-red-400 hover:bg-red-500 hover:text-white shadow-sm border border-red-100'}`} 
+                        title="אלימינציה"
                       >
-                        <XCircle className="w-5 h-5" />
+                        <XCircle className="w-4 h-4" />
                       </button>
                     )}
-                    {showResults && opt.isCorrect && <CheckCircle2 className="absolute right-4 w-8 h-8 text-green-600" />}
-                    {showResults && isSelected && !opt.isCorrect && <XCircle className="absolute right-4 w-8 h-8 text-red-500" />}
+                    {showResults && opt.isCorrect && <CheckCircle2 className="absolute right-3 w-5 h-5 text-green-600" />}
+                    {showResults && isSelected && !opt.isCorrect && <XCircle className="absolute right-3 w-5 h-5 text-red-500" />}
                     <div className={textStyle}>{opt.text}</div>
                   </motion.div>
                 );
@@ -539,18 +539,15 @@ function PracticeClosed({ questions, theme, onFinish }: { questions: any[], them
             </div>
 
             {step === 3 && (
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white border-2 border-green-200 p-8 rounded-3xl mb-10 shadow-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
-                <h4 className="text-xl font-black text-green-900 mb-6 flex items-center gap-2 relative z-10">
-                   <Target className="w-6 h-6 text-green-700" /> ניתוח התשובות:
+              <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="bg-white border border-green-200 p-4 rounded-xl shadow-md space-y-2">
+                <h4 className="text-xs font-black text-green-900 flex items-center gap-2">
+                   <Target className="w-4 h-4 text-green-700" /> ניתוח התשובות:
                 </h4>
-                <ul className="space-y-4 relative z-10">
+                <ul className="space-y-1.5">
                   {[...q.options].sort((a,b) => (a.isCorrect === b.isCorrect ? 0 : a.isCorrect ? -1 : 1)).map((opt: any, idx: number) => (
-                    <li key={idx} className={`p-4 rounded-2xl shadow-sm border-r-8 flex gap-3 items-start ${opt.isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-300'}`}>
-                      <div className="pt-1">{opt.isCorrect ? <CheckCircle2 className="w-5 h-5 text-green-600"/> : <XCircle className="w-5 h-5 text-red-500"/>}</div>
-                      <div>
-                        <span className="text-slate-900 font-bold leading-relaxed">{opt.explanation}</span>
-                      </div>
+                    <li key={idx} className={`p-2 rounded-lg border-r-4 flex gap-2 items-start text-[11px] ${opt.isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-300'}`}>
+                      <div className="pt-0.5">{opt.isCorrect ? <CheckCircle2 className="w-3.5 h-3.5 text-green-600"/> : <XCircle className="w-3.5 h-3.5 text-red-500"/>}</div>
+                      <span className="text-slate-900 font-bold leading-tight text-right">{opt.explanation}</span>
                     </li>
                   ))}
                 </ul>
@@ -560,9 +557,9 @@ function PracticeClosed({ questions, theme, onFinish }: { questions: any[], them
             {step === 3 && (
               <button 
                 onClick={handleNextQ} 
-                className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-5 rounded-2xl shadow-2xl transition-all text-xl border-b-4 border-green-950 active:border-b-0 active:translate-y-1 flex items-center justify-center gap-3"
+                className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-3.5 rounded-xl shadow-lg transition-all text-sm border-b-4 border-green-950 active:border-b-0 active:translate-y-1 flex items-center justify-center gap-2"
               >
-                {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'סיום מסלול סגורות'} <ArrowRight className="w-6 h-6" />
+                {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'סיום מסלול'} <ArrowRight className="w-4 h-4 rotate-180" />
               </button>
             )}
           </div>
@@ -622,30 +619,30 @@ function PracticeThreeQuestions({ questions, theme, onFinish }: { questions: any
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl border-2 border-green-200 overflow-hidden max-w-3xl mx-auto">
-      <div className="p-4 bg-green-50 border-b border-green-200 flex justify-between font-bold text-xs text-green-800 uppercase tracking-widest">
+    <div className="bg-white rounded-2xl shadow-xl border-2 border-green-200 overflow-hidden max-w-2xl mx-auto">
+      <div className="p-2 bg-green-50 border-b border-green-200 flex justify-between font-bold text-[10px] text-green-800 uppercase tracking-widest">
         <span>שאלה {qIndex + 1} מתוך {questions.length}</span>
         <span className={`${theme.text}`}>אסטרטגיית 3 השאלות</span>
       </div>
       
-      <div className="p-8 bg-white border-b border-green-100 shadow-sm relative z-10">
-        <h3 className="text-xl font-bold text-green-900 leading-relaxed text-right mb-6">{q.text}</h3>
+      <div className="p-4 md:p-5 bg-white border-b border-green-50 shadow-sm">
+        <h3 className="text-base md:text-lg font-bold text-green-900 leading-snug text-right mb-4">{q.text}</h3>
         
         {q.table && (
-          <div className="overflow-x-auto mb-6">
-            <table className="w-full border-collapse border-2 border-green-200 text-right text-sm">
+          <div className="overflow-x-auto mb-2">
+            <table className="w-full border-collapse border border-green-100 text-right text-[10px]">
               <thead>
                 <tr className="bg-green-50">
                   {q.table[0].map((cell: any, i: number) => (
-                    <th key={i} className="border border-green-200 p-2 font-black text-green-900">{cell}</th>
+                    <th key={i} className="border border-green-100 p-1.5 font-black text-green-900">{cell}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {q.table.slice(1).map((row: any[], i: number) => (
-                  <tr key={i} className="hover:bg-green-50/50 transition-colors">
+                  <tr key={i} className="hover:bg-green-50/50">
                     {row.map((cell: any, j: number) => (
-                      <td key={j} className="border border-green-100 p-2 text-green-800 font-bold">{cell}</td>
+                      <td key={j} className="border border-green-50 p-1.5 text-green-800 font-bold">{cell}</td>
                     ))}
                   </tr>
                 ))}
@@ -655,36 +652,38 @@ function PracticeThreeQuestions({ questions, theme, onFinish }: { questions: any
         )}
       </div>
       
-      <div className="p-8 bg-[#FBFDFB]">
-        <div className="flex gap-2 mb-10 justify-center">
+      <div className="p-4 md:p-6 bg-[#FBFDFB]">
+        <div className="flex gap-1.5 mb-6 justify-center">
           {[1,2,3,4,5].map(i => (
-            <div key={i} className={`h-2.5 rounded-full transition-all duration-500 ${step >= i ? `${theme.primary} w-10 shadow-md` : 'bg-green-100 w-4 opacity-50'}`} />
+            <div key={i} className={`h-2 rounded-full transition-all duration-500 ${step >= i ? `${theme.primary} w-8 shadow-sm` : 'bg-green-100 w-3 opacity-30'}`} />
           ))}
         </div>
 
         <AnimatePresence mode="wait">
           {step <= 3 && (
-            <motion.div key={`s${step}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-              <h4 className="text-2xl font-black text-green-900 mb-2 flex items-center gap-3">
-                {step === 1 && <><MessageCircleQuestion className="w-8 h-8 text-green-700"/> 1. מה שואלים אותי?</>}
-                {step === 2 && <><Lightbulb className="w-8 h-8 text-green-700"/> 2. מה ידוע לי?</>}
-                {step === 3 && <><AlignLeft className="w-8 h-8 text-green-700"/> 3. מה סוג התשובה? מה עלי לבצע כדי להשיב?</>}
-              </h4>
-              <p className="text-green-800 mb-8 font-medium leading-relaxed">
-                {step === 1 && 'כמה סעיפים יש? מה מוטל עלי לעשות? האם מבקשים קביעה קצרה או הסבר מנומק?'}
-                {step === 2 && 'גייסו ידע: מה נאמר בטקסט או בטבלה? איזה עקרון ביולוגי נדרש כאן?'}
-                {step === 3 && 'איך נבנה את התשובה? מהו רצף השלבים הלוגי שיוביל לפתרון הנכון?'}
-              </p>
+            <motion.div key={`s${step}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4">
+              <div>
+                <h4 className="text-base font-black text-green-900 flex items-center gap-2">
+                  {step === 1 && <><MessageCircleQuestion className="w-5 h-5 text-green-700"/> 1. מה שואלים?</>}
+                  {step === 2 && <><Lightbulb className="w-5 h-5 text-green-700"/> 2. מה ידוע לי?</>}
+                  {step === 3 && <><AlignLeft className="w-5 h-5 text-green-700"/> 3. מה סוג התשובה?</>}
+                </h4>
+                <p className="text-[11px] text-green-700 font-bold leading-tight mt-1">
+                  {step === 1 && 'מה מוטל עלי לעשות? האם מבקשים קביעה או הסבר?'}
+                  {step === 2 && 'מה נאמר בטקסט או בטבלה? איזה עקרון ביולוגי נדרש?'}
+                  {step === 3 && 'איך נבנה את התשובה? מהו רצף השלבים הלוגי?'}
+                </p>
+              </div>
 
-              <div className="space-y-4 mb-8">
+              <div className="grid grid-cols-1 gap-2">
                 {currentOptions.map((opt: any, idx: number) => {
                   const isSelected = selectedOption === idx;
-                  let btnClass = "w-full p-5 rounded-2xl font-bold text-lg border-2 transition-all text-right flex items-start gap-4 ";
+                  let btnClass = "w-full p-3.5 rounded-xl font-bold text-sm border-2 transition-all text-right flex items-start gap-3 ";
                   
                   if (isSelected) {
-                    btnClass += opt.isCorrect ? "bg-green-800 text-white border-transparent shadow-lg" : "bg-red-50 text-red-800 border-red-300";
+                    btnClass += opt.isCorrect ? "bg-green-800 text-white border-transparent shadow-md" : "bg-red-50 text-red-800 border-red-300";
                   } else {
-                    btnClass += isAnswered && opt.isCorrect ? "bg-green-100 border-green-500 text-green-900" : "bg-white text-green-800 border-green-100 hover:border-green-500 hover:bg-green-50";
+                    btnClass += isAnswered && opt.isCorrect ? "bg-green-50 border-green-500 text-green-900" : "bg-white text-green-800 border-green-50 hover:border-green-400";
                     if (isAnswered) btnClass += " opacity-60";
                   }
 
@@ -695,24 +694,24 @@ function PracticeThreeQuestions({ questions, theme, onFinish }: { questions: any
                       disabled={isAnswered}
                       className={btnClass}
                     >
-                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-1 ${isSelected ? 'border-white' : 'border-green-200'}`}>
-                        {isSelected ? <div className={`w-3 h-3 rounded-full ${opt.isCorrect ? 'bg-white' : 'bg-red-500'}`} /> : isAnswered && opt.isCorrect && <CheckCircle2 className="w-5 h-5 text-green-600" />}
+                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 ${isSelected ? 'border-white' : 'border-green-200'}`}>
+                        {isSelected ? <div className={`w-2.5 h-2.5 rounded-full ${opt.isCorrect ? 'bg-white' : 'bg-red-500'}`} /> : isAnswered && opt.isCorrect && <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />}
                       </div>
-                      <span className="flex-grow">{opt.text}</span>
+                      <span className="flex-grow leading-tight">{opt.text}</span>
                     </button>
                   );
                 })}
               </div>
 
               {isAnswered && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white border-2 border-green-100 p-6 rounded-2xl mb-8 shadow-md">
-                   <div className="flex items-center gap-3 mb-2">
-                     {currentOptions[selectedOption!].isCorrect ? <CheckCircle2 className="w-6 h-6 text-green-600" /> : <XCircle className="w-6 h-6 text-red-500" />}
-                     <h5 className="font-black text-green-900">{currentOptions[selectedOption!].isCorrect ? 'זיהוי מעולה!' : 'לא בדיוק...'}</h5>
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white border-2 border-green-100 p-4 rounded-xl shadow-md space-y-3">
+                   <div className="flex items-center gap-2">
+                     {currentOptions[selectedOption!].isCorrect ? <CheckCircle2 className="w-4 h-4 text-green-600" /> : <XCircle className="w-4 h-4 text-red-500" />}
+                     <h5 className="text-sm font-black text-green-900">{currentOptions[selectedOption!].isCorrect ? 'זיהוי מעולה!' : 'לא בדיוק...'}</h5>
                    </div>
-                   <p className="text-green-800 font-medium">המחוון לשלב זה: {step === 1 ? q.stage1Rubric : step === 2 ? q.stage2Rubric : q.stage3Rubric}</p>
-                   <button onClick={nextStep} className={`w-full mt-6 bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 transition-all`}>
-                      המשך לשלב הבא <ArrowRight className="w-5 h-5 inline-block mr-2" />
+                   <p className="text-xs text-green-800 font-bold leading-relaxed">המחוון לשלב זה: {step === 1 ? q.stage1Rubric : step === 2 ? q.stage2Rubric : q.stage3Rubric}</p>
+                   <button onClick={nextStep} className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-3 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 transition-all text-xs`}>
+                      המשך לשלב הבא <ArrowRight className="w-4 h-4 inline-block mr-2 rotate-180" />
                    </button>
                 </motion.div>
               )}
@@ -720,23 +719,22 @@ function PracticeThreeQuestions({ questions, theme, onFinish }: { questions: any
           )}
 
           {step === 4 && (
-            <motion.div key="s4" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-              <h4 className="text-2xl font-black text-green-900 mb-4">עכשיו הכל ברור. נסחו את התשובה.</h4>
-              <p className="text-green-800 mb-6 font-medium">השתמשו בכל המידע שזיהיתם בשלושת השלבים הקודמים:</p>
-              <textarea className={`w-full p-6 rounded-2xl border-4 border-green-200 focus:border-green-600 outline-none min-h-[180px] mb-8 shadow-xl font-bold text-green-900 bg-white placeholder:font-normal`} value={inputs.final} onChange={e => setInputs({...inputs, final: e.target.value})} placeholder="כתבו כאן את התשובה המלאה והמלוטשת שלכם..." />
-              <button onClick={() => setStep(5)} disabled={inputs.final.length < 5} className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-5 rounded-2xl shadow-xl disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1">הגש ובדוק מול מחוון הפיצוח</button>
+            <motion.div key="s4" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-4">
+              <h4 className="text-lg font-black text-green-900 leading-tight">עכשיו הכל ברור. נסחו את התשובה.</h4>
+              <textarea className={`w-full p-4 rounded-xl border-2 border-green-100 focus:border-green-800 outline-none min-h-[140px] shadow-inner font-bold text-green-900 bg-white text-sm`} value={inputs.final} onChange={e => setInputs({...inputs, final: e.target.value})} placeholder="כתבו כאן את התשובה המלאה..." />
+              <button onClick={() => setStep(5)} disabled={inputs.final.length < 5} className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-lg disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm">הגש ובדוק מול המחוון</button>
             </motion.div>
           )}
 
           {step === 5 && (
-            <motion.div key="s5" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <h4 className="text-2xl font-black text-green-800 mb-8 flex items-center justify-center gap-3"><CheckCircle2 className="w-8 h-8"/> השוואה למחוון הפיצוח</h4>
-              <div className={`${theme.bg} border-2 ${theme.border} p-8 rounded-3xl mb-10 shadow-xl relative`}>
-                <div className="absolute -top-4 -right-4 bg-green-800 text-white px-4 py-1 rounded-full text-xs font-black shadow-md uppercase">התשובה המושלמת</div>
-                <span className="whitespace-pre-line text-green-900 font-black text-lg leading-relaxed">{q.rubric}</span>
+            <motion.div key="s5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+              <h4 className="text-lg font-black text-green-800 flex items-center justify-center gap-2"><CheckCircle2 className="w-5 h-5"/> השוואה למחוון הפיצוח</h4>
+              <div className={`${theme.bg} border-2 ${theme.border} p-5 rounded-2xl shadow-md relative`}>
+                <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">התשובה המושלמת</div>
+                <span className="whitespace-pre-line text-green-900 font-black text-base leading-relaxed">{q.rubric}</span>
               </div>
-              <button onClick={handleNextQ} className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-5 rounded-2xl shadow-xl flex items-center justify-center gap-3 border-b-4 border-green-950 active:border-b-0 active:translate-y-1">
-                {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'לפרק הבא'} <ArrowRight className="w-6 h-6" />
+              <button onClick={handleNextQ} className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-xl flex items-center justify-center gap-3 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm">
+                {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'סיום הפרק'} <ArrowRight className="w-4 h-4 rotate-180" />
               </button>
             </motion.div>
           )}
@@ -769,29 +767,29 @@ function PracticeWords({ questions, theme, onFinish }: { questions: any[], theme
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl border-2 border-green-200 overflow-hidden max-w-3xl mx-auto">
-      <div className="p-4 bg-green-50 border-b border-green-200 flex justify-between font-bold text-xs text-green-800 uppercase tracking-widest">
+    <div className="bg-white rounded-2xl shadow-xl border-2 border-green-200 overflow-hidden max-w-2xl mx-auto">
+      <div className="p-2.5 bg-green-50 border-b border-green-200 flex justify-between font-bold text-[10px] text-green-800 uppercase tracking-widest">
         <span>שאלה {qIndex + 1} מתוך {questions.length}</span>
         <span className={`${theme.text}`}>זיהוי מילות הוראה</span>
       </div>
       
-      <div className="p-8 bg-white border-b border-green-100 shadow-sm relative z-10">
-        <h3 className="text-xl font-bold text-green-900 leading-relaxed text-right">{q.text}</h3>
+      <div className="p-4 md:p-6 bg-white border-b border-green-50 shadow-sm">
+        <h3 className="text-base md:text-lg font-bold text-green-900 leading-snug text-right">{q.text}</h3>
       </div>
       
-      <div className="p-8 bg-[#FBFDFB]">
+      <div className="p-4 md:p-6 bg-[#FBFDFB]">
         {step === 1 && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-            <h4 className="text-2xl font-black text-green-900 mb-8">{q.mcQuestion}</h4>
-            <div className="space-y-4 mb-10">
+            <h4 className="text-lg font-black text-green-900 mb-4">{q.mcQuestion}</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
               {shuffledOptions.map((opt: any, idx: number) => (
                 <button 
                   key={idx} 
                   onClick={() => setSelectedOption(idx)} 
-                  className={`w-full p-5 rounded-2xl font-bold text-lg border-2 transition-all text-right flex items-center gap-4 ${selectedOption === idx ? 'bg-green-800 text-white border-transparent shadow-lg' : 'bg-white text-green-800 border-green-100 hover:border-green-500 hover:bg-green-50'}`}
+                  className={`p-3 rounded-xl font-bold text-sm border-2 transition-all text-right flex items-center gap-3 ${selectedOption === idx ? 'bg-green-800 text-white border-transparent shadow-md' : 'bg-white text-green-800 border-green-50 hover:border-green-500 hover:bg-green-50'}`}
                 >
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${selectedOption === idx ? 'border-white bg-white/20' : 'border-green-200'}`}>
-                    {selectedOption === idx && <div className="w-3 h-3 bg-white rounded-full" />}
+                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${selectedOption === idx ? 'border-white bg-white/20' : 'border-green-200'}`}>
+                    {selectedOption === idx && <div className="w-2.5 h-2.5 bg-white rounded-full" />}
                   </div>
                   {opt.text}
                 </button>
@@ -800,33 +798,30 @@ function PracticeWords({ questions, theme, onFinish }: { questions: any[], theme
             <button 
               onClick={() => setStep(2)} 
               disabled={selectedOption === null} 
-              className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-5 rounded-2xl shadow-xl disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1`}
+              className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-3.5 rounded-xl shadow-lg disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm`}
             >
-              אשר בחירה והמשך לניסוח התשובה
+              אשר והמשך לניסוח התשובה
             </button>
           </motion.div>
         )}
 
         {step === 2 && (
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-            <div className={`p-6 rounded-2xl mb-8 shadow-inner flex items-center gap-4 ${shuffledOptions[selectedOption!].isCorrect ? 'bg-green-100 border-2 border-green-400' : 'bg-red-50 border-2 border-red-400'}`}>
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-4">
+            <div className={`p-3 rounded-xl shadow-inner flex items-center gap-3 ${shuffledOptions[selectedOption!].isCorrect ? 'bg-green-50 border border-green-300' : 'bg-red-50 border border-red-300'}`}>
               <div>
-                {shuffledOptions[selectedOption!].isCorrect ? <CheckCircle2 className="w-10 h-10 text-green-700"/> : <XCircle className="w-10 h-10 text-red-600" />}
+                {shuffledOptions[selectedOption!].isCorrect ? <CheckCircle2 className="w-6 h-6 text-green-700"/> : <AlertCircle className="w-6 h-6 text-red-600" />}
               </div>
               <div className="flex-grow text-right">
-                <h4 className={`text-xl font-black mb-1 ${shuffledOptions[selectedOption!].isCorrect ? 'text-green-900' : 'text-red-900'}`}>
+                <h4 className={`text-sm font-black ${shuffledOptions[selectedOption!].isCorrect ? 'text-green-900' : 'text-red-900'}`}>
                   {shuffledOptions[selectedOption!].isCorrect ? `זיהוי מעולה!` : `לא בדיוק...`}
                 </h4>
-                <p className="text-slate-700 font-medium">
-                  {shuffledOptions[selectedOption!].isCorrect 
-                    ? 'הבנתם בדיוק איך לענות. עכשיו נסחו את התשובה המלאה:' 
-                    : `שימו לב לדרישות של מילת ההוראה בשאלה. למרות זאת, נסו לנסח תשובה מלאה:`}
+                <p className="text-[11px] text-slate-700 font-bold whitespace-nowrap">
+                  {shuffledOptions[selectedOption!].isCorrect ? 'עכשיו נסחו את התשובה המלאה:' : 'שימו לב לדרישות המילה. נסו לנסח תשובה מלאה:'}
                 </p>
               </div>
             </div>
-            <h4 className="text-xl font-black text-green-900 mb-4">כתבו את התשובה:</h4>
             <textarea 
-              className={`w-full p-6 rounded-2xl border-2 border-green-300 focus:border-green-600 outline-none min-h-[160px] mb-8 shadow-lg font-bold text-green-900 bg-white`} 
+              className={`w-full p-4 rounded-xl border-2 border-green-200 focus:border-green-600 outline-none min-h-[120px] shadow-inner font-bold text-green-900 bg-white text-sm`} 
               placeholder="כתוב כאן..." 
               value={finalAnswer} 
               onChange={e => setFinalAnswer(e.target.value)} 
@@ -834,7 +829,7 @@ function PracticeWords({ questions, theme, onFinish }: { questions: any[], theme
             <button 
               onClick={() => setStep(3)} 
               disabled={finalAnswer.length < 5} 
-              className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-5 rounded-2xl shadow-xl disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1`}
+              className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-3.5 rounded-xl shadow-lg disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm`}
             >
               סיימתי, בדוק אותי
             </button>
@@ -842,15 +837,15 @@ function PracticeWords({ questions, theme, onFinish }: { questions: any[], theme
         )}
 
         {step === 3 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-             <h4 className="text-2xl font-black text-green-800 mb-8 flex items-center justify-center gap-3"><CheckCircle2 className="w-8 h-8"/> השוואה למחוון</h4>
-             <div className="bg-white border border-green-100 p-6 rounded-2xl mb-6 shadow-sm"><strong className="block text-green-800 text-sm mb-2 uppercase tracking-wide">הניסוח שלכם:</strong> <span className="font-bold text-green-950">{finalAnswer}</span></div>
-             <div className={`${theme.bg} border-2 ${theme.border} p-8 rounded-3xl mb-10 shadow-xl relative`}>
-                <div className="absolute -top-4 -right-4 bg-green-800 text-white px-4 py-1 rounded-full text-xs font-black shadow-md uppercase tracking-wider">תשובת מומחה</div>
-                <span className="whitespace-pre-line text-green-900 font-black text-lg leading-relaxed">{q.rubric}</span>
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+             <h4 className="text-lg font-black text-green-800 flex items-center justify-center gap-2 mb-2"><CheckCircle2 className="w-5 h-5"/> השוואה למחוון</h4>
+             <div className="bg-white border border-green-100 p-3 rounded-xl shadow-sm text-sm"><strong className="block text-green-800 text-[10px] mb-1 uppercase tracking-wide">הניסוח שלכם:</strong> <span className="font-bold text-green-950">{finalAnswer}</span></div>
+             <div className={`${theme.bg} border-2 ${theme.border} p-5 rounded-2xl shadow-md relative`}>
+                <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">תשובת מומחה</div>
+                <span className="whitespace-pre-line text-green-900 font-black text-base leading-relaxed">{q.rubric}</span>
               </div>
-            <button onClick={handleNextQ} className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-5 rounded-2xl shadow-xl flex items-center justify-center gap-3 border-b-4 border-green-950 active:border-b-0 active:translate-y-1">
-              {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'לפרק הבא'} <ArrowRight className="w-6 h-6" />
+            <button onClick={handleNextQ} className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-xl flex items-center justify-center gap-3 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm">
+              {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'לפרק הבא'} <ArrowRight className="w-4 h-4 rotate-180" />
             </button>
           </motion.div>
         )}
@@ -886,21 +881,19 @@ function PracticeChain({ questions, theme, onFinish }: { questions: any[], theme
   const checkOrder = () => {
     const allFilled = sentences.every(s => userOrders[s.id] && userOrders[s.id].trim() !== '');
     if (!allFilled) {
-      setErrorMsg('אנא מלאו מספר סדר (1, 2, 3...) עבור כל אחד מהמשפטים.');
+      setErrorMsg('אנא מלאו מספר סדר עבור כל המשפטים.');
       return;
     }
 
     const isCorrect = sentences.every(s => parseInt(userOrders[s.id]) === s.order);
     if (isCorrect) {
       setStep(2);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    else setErrorMsg('הסדר אינו מדויק. חפשו את ה"סיבה" הראשונית ביותר (1) ומיספרו את שלבי הביניים המביאים ל"תוצאה" הסופית.');
+    else setErrorMsg('הסדר אינו מדויק. חפשו את ה"סיבה" הראשונית (1) ומספרו את השלבים.');
   };
 
   const startWriting = () => {
     setStep(3);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNextQ = () => {
@@ -921,37 +914,34 @@ function PracticeChain({ questions, theme, onFinish }: { questions: any[], theme
   }, [q]);
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl border-2 border-green-200 overflow-hidden max-w-3xl mx-auto">
-      <div className="p-4 bg-green-50 border-b border-green-200 flex justify-between font-bold text-xs text-green-800 uppercase tracking-widest">
+    <div className="bg-white rounded-2xl shadow-xl border-2 border-green-200 overflow-hidden max-w-2xl mx-auto">
+      <div className="p-2.5 bg-green-50 border-b border-green-200 flex justify-between font-bold text-[10px] text-green-800 uppercase tracking-widest">
         <span>שאלה {qIndex + 1} מתוך {questions.length}</span>
         <span className={`${theme.text}`}>בניית שרשור נסיבתי</span>
       </div>
       
-      <div className="p-8 bg-white border-b border-green-100 shadow-sm relative z-10 text-right">
-        <h3 className="text-xl font-bold text-green-900 leading-relaxed">{q.text}</h3>
+      <div className="p-4 md:p-6 bg-white border-b border-green-50 shadow-sm text-right">
+        <h3 className="text-base md:text-lg font-bold text-green-900 leading-snug">{q.text}</h3>
       </div>
       
-      <div className="p-8 bg-[#FBFDFB]">
+      <div className="p-4 md:p-6 bg-[#FBFDFB]">
         <AnimatePresence mode="wait">
           {step === 1 && (
-            <motion.div key="s1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
-              <h4 className="text-2xl font-black text-green-900 mb-6 flex items-center gap-3">
-                <Link className="w-8 h-8 text-green-700 font-bold" /> מיספור שלבי השרשור
+            <motion.div key="s1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-4">
+              <h4 className="text-base font-black text-green-900 flex items-center gap-2">
+                <Link className="w-5 h-5 text-green-700" /> מיספור שלבי השרשור
               </h4>
-              <p className="text-green-800 mb-8 font-medium leading-relaxed">
-                לפניכם משפטים המרכיבים שרשור נסיבתי. רשמו בתיבה שליד כל משפט את מספרו בסדר הנכון (1 עבור הסיבה הראשונה, 2 עבור השלב הבא וכן הלאה).
-              </p>
               
-              <div className="space-y-3 mb-10">
+              <div className="space-y-2">
                 {sentences.map((item) => (
                   <div 
                     key={item.id} 
-                    className={`p-5 bg-white border-2 border-green-100 rounded-2xl shadow-sm flex items-center gap-5 transition-all hover:border-green-500 hover:shadow-md group`}
+                    className={`p-3 bg-white border border-green-100 rounded-xl shadow-sm flex items-center gap-4 transition-all hover:border-green-400 group`}
                   >
                     <input 
                       type="text"
                       inputMode="numeric"
-                      className="w-14 h-14 bg-green-50 border-2 border-green-200 rounded-xl text-center font-black text-green-900 text-2xl focus:border-green-800 focus:bg-white outline-none shadow-inner"
+                      className="w-10 h-10 bg-green-50 border border-green-200 rounded-lg text-center font-black text-green-900 text-lg focus:border-green-600 outline-none"
                       value={userOrders[item.id] || ''}
                       onChange={(e) => {
                         const val = e.target.value.replace(/\D/g, '');
@@ -960,20 +950,20 @@ function PracticeChain({ questions, theme, onFinish }: { questions: any[], theme
                       }}
                       placeholder="#"
                     />
-                    <span className="font-bold text-green-900 flex-grow text-lg leading-snug">{item.text}</span>
+                    <span className="font-bold text-green-900 flex-grow text-sm leading-tight text-right">{item.text}</span>
                   </div>
                 ))}
               </div>
 
               {errorMsg && (
-                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-red-50 text-red-800 p-5 rounded-2xl mb-8 flex items-center gap-4 font-bold border-2 border-red-200 shadow-sm animate-pulse-subtle">
-                  <AlertCircle className="w-8 h-8 flex-shrink-0" /> {errorMsg}
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-red-50 text-red-800 p-3 rounded-xl flex items-center gap-2 text-xs font-bold border border-red-200 shadow-sm">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" /> {errorMsg}
                 </motion.div>
               )}
 
               <button 
                 onClick={checkOrder} 
-                className={`w-full ${theme.primary} ${theme.hover} text-white font-black py-5 rounded-2xl shadow-xl transition-all text-xl border-b-4 border-green-950 active:border-b-0 active:translate-y-1`}
+                className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-lg transition-all text-sm border-b-4 border-green-950 active:border-b-0 active:translate-y-1`}
               >
                 בדוק את המספור שלי
               </button>
@@ -981,94 +971,79 @@ function PracticeChain({ questions, theme, onFinish }: { questions: any[], theme
           )}
 
           {step === 2 && (
-             <motion.div key="s2" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center justify-center p-6 bg-green-100 rounded-full mb-6 border-4 border-white shadow-xl">
-                  <CheckCircle2 className="w-16 h-16 text-green-700"/>
+             <motion.div key="s2" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center space-y-6">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center justify-center p-3 bg-green-100 rounded-full border-2 border-white shadow-md">
+                    <CheckCircle2 className="w-8 h-8 text-green-700"/>
+                  </div>
+                  <h4 className="text-xl font-black text-green-900 tracking-tight">מספור מדויק!</h4>
                 </div>
-                <h4 className="text-4xl font-black text-green-900 mb-2">מספור מדויק!</h4>
-                <p className="text-green-700 font-bold">עכשיו כשהסדר ברור, אפשר לעבור לניסוח התשובה המלאה.</p>
-              </div>
 
-              <div className={`bg-gradient-to-br from-green-50 to-white border-2 border-green-300 p-8 rounded-3xl mb-12 shadow-inner relative`}>
-                <div className="space-y-6">
-                  {orderedSentences.map((s, i) => (
-                    <div key={i} className="flex gap-6 items-start">
-                      <div className={`w-10 h-10 rounded-2xl ${theme.primary} text-white flex items-center justify-center font-black flex-shrink-0 shadow-lg text-lg transform rotate-3`}>{i+1}</div>
-                      <p className={`text-green-950 font-black text-xl leading-relaxed pt-1`}>{s.text}</p>
-                    </div>
-                  ))}
+                <div className={`bg-white border-2 border-green-100 p-5 rounded-2xl shadow-inner relative text-right`}>
+                  <div className="space-y-4">
+                    {orderedSentences.map((s, i) => (
+                      <div key={i} className="flex gap-4 items-start">
+                        <div className={`w-6 h-6 rounded-lg ${theme.primary} text-white flex items-center justify-center font-black flex-shrink-0 shadow-sm text-xs`}>{i+1}</div>
+                        <p className={`text-green-950 font-bold text-sm leading-snug pt-0.5`}>{s.text}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="absolute bottom-4 left-6 opacity-10">
-                  <Link className="w-24 h-24 text-green-900 rotate-12" />
-                </div>
-              </div>
-              
-              <button 
-                onClick={startWriting} 
-                className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-5 rounded-2xl shadow-xl flex items-center justify-center gap-3 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-xl"
-              >
-                עבור לניסוח תשובה מלאה <ArrowRight className="w-6 h-6" />
-              </button>
+                
+                <button 
+                  onClick={startWriting} 
+                  className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm flex items-center justify-center gap-2"
+                >
+                  לניסוח תשובה מלאה <ArrowRight className="w-4 h-4 rotate-180" />
+                </button>
             </motion.div>
           )}
 
           {step === 3 && (
-            <motion.div key="s3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <div className="flex justify-between items-center mb-6">
-                <h4 className="text-2xl font-black text-green-900">ניסוח תשובת בגרות</h4>
-                <div className="text-xs font-black text-green-700 bg-green-100 px-3 py-1 rounded-full uppercase">שלב הניסוח</div>
+            <motion.div key="s3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+              <div className="flex justify-between items-center mb-1">
+                <h4 className="text-lg font-black text-green-900">ניסוח תשובת בגרות</h4>
+                <div className="text-[9px] font-black text-green-700 bg-green-50 px-2.5 py-1 rounded-full uppercase">שלב הניסוח</div>
               </div>
 
-              <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-5 mb-8 shadow-inner">
-                <h5 className="font-black text-slate-700 mb-3 text-sm flex items-center gap-2">מרכיבי התשובה (השתמשו במספור הנכון לניסוח הרצף):</h5>
-                <div className="flex flex-wrap gap-3 items-center">
-                  {sentences.map((s, i) => (
-                    <div key={i} className="bg-white px-3 py-2 rounded-xl border border-slate-200 text-slate-800 font-bold shadow-sm flex items-center gap-2">
-                      <span className="bg-slate-100 text-slate-600 w-6 h-6 flex items-center justify-center rounded-lg text-[10px]">{s.order}</span>
-                      <span className="text-xs">{s.text}</span>
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 shadow-inner">
+                <div className="flex flex-wrap gap-1.5 items-center">
+                  {orderedSentences.map((s, i) => (
+                    <div key={i} className="bg-white px-2 py-1 rounded-lg border border-slate-200 text-slate-800 font-bold shadow-sm flex items-center gap-1.5">
+                      <span className="bg-slate-100 text-slate-500 w-4 h-4 flex items-center justify-center rounded text-[9px]">{i+1}</span>
+                      <span className="text-[10px] whitespace-nowrap">{s.text.substring(0, 15)}...</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <p className="text-green-900 font-bold mb-4">חברו את שלבי השרשור לתשובה קולחת ומקצועית:</p>
               <textarea 
-                className={`w-full p-6 rounded-3xl border-4 border-green-100 focus:border-green-800 outline-none min-h-[180px] shadow-xl font-bold text-green-900 bg-white placeholder:font-normal`}
+                className={`w-full p-4 rounded-xl border-2 border-green-100 focus:border-green-800 outline-none min-h-[140px] shadow-inner font-bold text-green-900 bg-white text-sm`}
                 value={studentAnswer}
                 onChange={e => setStudentAnswer(e.target.value)}
-                placeholder="למשל: 'כתוצאה מעלייה בטמפרטורה, האנזימים עוברים דנטורציה...'"
+                placeholder="חברו את שלבי השרשור לתשובה קולחת..."
               />
 
               {!showFeedback ? (
                 <button 
                   onClick={() => setShowFeedback(true)}
-                  disabled={studentAnswer.length < 10}
-                  className="w-full mt-8 bg-green-800 hover:bg-green-900 text-white font-black py-5 rounded-2xl shadow-xl disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 transition-all text-xl"
+                  disabled={studentAnswer.length < 5}
+                  className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-lg disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm transition-all"
                 >
-                  הגש ובדוק מול מחוון הבגרות
+                  בדוק מול מחוון הבגרות
                 </button>
               ) : (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-10 space-y-8">
-                  <div className="bg-green-100 border-4 border-green-300 p-8 rounded-3xl shadow-2xl relative">
-                    <div className="absolute -top-4 -right-4 bg-green-800 text-white px-5 py-1.5 rounded-full text-sm font-black shadow-lg">מחוון בגרות מצפה</div>
-                    <p className="text-green-950 font-black text-lg leading-relaxed">{q.rubric}</p>
-                  </div>
-
-                  <div className="bg-amber-50 p-6 rounded-2xl border-2 border-amber-200">
-                    <h5 className="font-black text-amber-800 mb-2 flex items-center gap-2">
-                       <Lightbulb className="w-5 h-5" /> טיפ לניסוח מושלם:
-                    </h5>
-                    <p className="text-amber-900 text-sm font-medium leading-relaxed">
-                      ודאו שאתם משתמשים במילות חיבור (כתוצאה מכך, לכן, בעקבות) ומתייחסים לרמת הארגון המתאימה (אנזים/תא/יצור).
-                    </p>
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4 pt-2">
+                  <div className="bg-green-50 border-2 border-green-200 p-5 rounded-2xl shadow-lg relative">
+                    <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md">מחוון בגרות</div>
+                    <p className="text-green-950 font-black text-base leading-relaxed text-right">{q.rubric}</p>
                   </div>
 
                   <button 
                     onClick={handleNextQ} 
-                    className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-5 rounded-2xl shadow-xl flex items-center justify-center gap-3 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-xl"
+                    className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-xl flex items-center justify-center gap-2 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm"
                   >
-                    {qIndex < questions.length - 1 ? 'לשרשור הבא' : 'סיום פרק שרשור סיבתי'} <ArrowRight className="w-6 h-6" />
+                    {qIndex < questions.length - 1 ? 'לשרשור הבא' : 'סיום פרק'} <ArrowRight className="w-4 h-4 rotate-180" />
                   </button>
                 </motion.div>
               )}
@@ -1213,107 +1188,97 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col overflow-hidden">
-      <div className="flex-none mb-3">
+    <div className="max-w-4xl mx-auto h-[calc(100vh-120px)] flex flex-col overflow-hidden">
+      <div className="flex-none mb-2">
         <div className="flex items-center justify-between gap-4">
           <div className="flex flex-col items-start translate-y-1">
-            <div className="bg-green-800 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest inline-flex items-center gap-2 mb-1 shadow-md">
-              <Award className="w-3 h-3" /> סימולציית בגרות
+            <div className="bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest inline-flex items-center gap-1.5 shadow-md">
+              <Award className="w-2.5 h-2.5" /> סימולציית בגרות
             </div>
-            <h2 className="text-xl md:text-2xl font-black text-green-900 leading-tight">
-              {currentQ.type === 'closed' ? 'חלק א\': שאלות סגורות' : (currentQ as any).section === 'core' ? 'חלק ב\': שאלות פתוחות (ליבה)' : 'חלק ג\': מיקרוביולוגיה'}
+            <h2 className="text-lg md:text-xl font-black text-green-900 leading-tight">
+              {currentQ.type === 'closed' ? 'חלק א\': שאלות סגורות' : (currentQ as any).section === 'core' ? 'חלק ב\': שאלות פתוחות' : 'חלק ג\': מיקרוביולוגיה'}
             </h2>
-            <div className="text-green-700 text-[10px] font-bold">שאלה {qIndex + 1} מתוך {allQuestions.length}</div>
+            <div className="text-green-700 text-[9px] font-bold">שאלה {qIndex + 1} מתוך {allQuestions.length}</div>
           </div>
           
           <motion.div 
             key={currentTotalScore}
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-white border-2 border-green-600 px-4 py-2 rounded-2xl shadow-lg flex items-center gap-2 flex-none"
+            className="bg-white border-2 border-green-600 px-3 py-1.5 rounded-xl shadow-md flex items-center gap-2 flex-none"
           >
-            <div className="text-[10px] md:text-xs font-black text-green-700 leading-none">ציון<br/>נוכחי</div>
-            <div className="text-2xl md:text-3xl font-black text-green-900">{currentTotalScore}</div>
-            <div className="text-[10px] font-bold text-green-600 self-end mb-0.5">/ 100</div>
+            <div className="text-[9px] font-black text-green-700 leading-none">ציון</div>
+            <div className="text-xl md:text-2xl font-black text-green-900">{currentTotalScore}</div>
+            <div className="text-[9px] font-bold text-green-600 self-end mb-0.5">/ 100</div>
           </motion.div>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border-2 border-green-200 overflow-hidden flex flex-col flex-grow min-h-0">
-        <div className="p-4 md:p-5 border-b border-green-50 bg-white flex-none">
-          <h3 className="text-lg md:text-xl font-bold text-green-900 leading-relaxed text-right">{currentQ.text}</h3>
+      <div className="bg-white rounded-xl md:rounded-2xl shadow-xl border-2 border-green-200 overflow-hidden flex flex-col flex-grow min-h-0">
+        <div className="p-3 md:p-4 border-b border-green-50 bg-white flex-none">
+          <h3 className="text-base md:text-lg font-bold text-green-900 leading-relaxed text-right">{currentQ.text}</h3>
         </div>
 
-        <div className="p-4 md:p-6 bg-[#FBFDFB] flex-grow overflow-y-auto overflow-x-hidden">
+        <div className="p-3 md:p-4 bg-[#FBFDFB] flex-grow overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-green-200">
           {currentQ.type === 'closed' ? (
             <div className="space-y-3">
-              <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 mb-4 text-[10px] font-medium text-amber-900 flex items-center gap-2">
-                <XCircle className="w-4 h-4 text-amber-700" />
+              <div className="bg-amber-50 p-2 rounded-xl border border-amber-200 mb-2 text-[10px] font-medium text-amber-900 flex items-center gap-2">
+                <XCircle className="w-3 h-3 text-amber-700" />
                 <span>טיפ: השתמשו בלחצן ה-X כדי למחוק מסיחים (אלימינציה).</span>
               </div>
               
-              {shuffledOptions.map((opt: any, idx: number) => (
-                <div key={idx} className="relative group">
-                  <button
-                    disabled={showClosedResult}
-                    onClick={() => { 
-                      const isCorrect = opt.isCorrect;
-                      setClosedResults(prev => ({ ...prev, [qIndex]: isCorrect }));
-                      setSelectedClosed(idx); 
-                      setShowClosedResult(true); 
-                    }}
-                    className={`w-full p-4 rounded-xl border-2 transition-all text-right flex items-start gap-4 ${
-                      showClosedResult 
-                        ? opt.isCorrect 
-                          ? 'bg-green-100 border-green-500 shadow-md ring-2 ring-green-200' 
-                          : selectedClosed === idx ? 'bg-red-50 border-red-500' : 'bg-gray-50 border-gray-200 opacity-50'
-                        : eliminated.includes(idx) 
-                          ? 'bg-gray-100 border-gray-200 opacity-40 grayscale pointer-events-none'
-                          : 'bg-white border-green-100 hover:border-green-500 hover:bg-green-50 shadow-sm'
-                    }`}
-                  >
-                    <div className="pt-1">
-                      {showClosedResult && opt.isCorrect ? (
-                        <CheckCircle2 className="w-6 h-6 text-green-600" />
-                      ) : (
-                        <div className={`w-6 h-6 rounded-full border-2 ${selectedClosed === idx ? 'bg-green-800 border-green-800' : (eliminated.includes(idx) ? 'border-gray-300' : 'border-green-200')}`} />
-                      )}
-                    </div>
-                    <span className={`flex-grow font-bold ${showClosedResult && opt.isCorrect ? 'text-green-900' : 'text-slate-800'} ${eliminated.includes(idx) ? 'line-through text-gray-400' : ''}`}>
-                      {opt.text}
-                    </span>
-                  </button>
-                  
-                  {!showClosedResult && !eliminated.includes(idx) && (
-                    <button 
-                      onClick={(e) => toggleEliminate(e, idx)}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all shadow-sm opacity-0 group-hover:opacity-100"
-                      title="מחק מסיח"
+              <div className="space-y-2">
+                {shuffledOptions.map((opt: any, idx: number) => (
+                  <div key={idx} className="relative group">
+                    <button
+                      disabled={showClosedResult}
+                      onClick={() => { 
+                        const isCorrect = opt.isCorrect;
+                        setClosedResults(prev => ({ ...prev, [qIndex]: isCorrect }));
+                        setSelectedClosed(idx); 
+                        setShowClosedResult(true); 
+                      }}
+                      className={`w-full p-3 rounded-xl border-2 transition-all text-right flex items-center gap-3 ${
+                        showClosedResult 
+                          ? opt.isCorrect 
+                            ? 'bg-green-100 border-green-500 shadow-md ring-2 ring-green-200' 
+                            : selectedClosed === idx ? 'bg-red-50 border-red-500' : 'bg-gray-50 border-gray-200 opacity-50'
+                          : eliminated.includes(idx) 
+                            ? 'bg-gray-100 border-gray-200 opacity-40 grayscale pointer-events-none'
+                            : 'bg-white border-green-100 hover:border-green-500 hover:bg-green-50 shadow-sm'
+                      }`}
                     >
-                      <XCircle className="w-5 h-5" />
+                      <div className="flex-none">
+                        {showClosedResult && opt.isCorrect ? (
+                          <CheckCircle2 className="w-5 h-5 text-green-600" />
+                        ) : (
+                          <div className={`w-5 h-5 rounded-full border-2 ${selectedClosed === idx ? 'bg-green-800 border-green-800' : (eliminated.includes(idx) ? 'border-gray-300' : 'border-green-200')}`} />
+                        )}
+                      </div>
+                      <span className={`text-sm font-bold ${showClosedResult && opt.isCorrect ? 'text-green-900' : 'text-slate-800'} ${eliminated.includes(idx) ? 'line-through text-gray-400' : ''}`}>
+                        {opt.text}
+                      </span>
                     </button>
-                  )}
-                  {eliminated.includes(idx) && !showClosedResult && (
-                    <button 
-                      onClick={(e) => toggleEliminate(e, idx)}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-all border border-slate-200 shadow-sm"
-                      title="החזר מסיח"
-                    >
-                      <ArrowUp className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-              ))}
+                    
+                    {!showClosedResult && !eliminated.includes(idx) && (
+                      <button 
+                        onClick={(e) => toggleEliminate(e, idx)}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-red-100 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all shadow-sm opacity-0 group-hover:opacity-100"
+                        title="מחק מסיח"
+                      >
+                        <XCircle className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
 
               {showClosedResult && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4 p-4 bg-green-50 rounded-xl border border-green-200">
-                  <h4 className="font-black text-green-900 mb-1 flex items-center gap-2 text-sm">
-                    <Lightbulb className="w-4 h-4 text-green-700" /> הסבר המחוון:
-                  </h4>
-                  <p className="text-green-950 font-bold leading-relaxed text-sm">{shuffledOptions[selectedClosed!].explanation}</p>
+                <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="mt-3 p-3 bg-green-50 rounded-xl border border-green-200">
+                  <p className="text-green-950 font-bold leading-relaxed text-xs mb-3 italic">"{shuffledOptions[selectedClosed!].explanation}"</p>
                   <button 
                     onClick={handleNext}
-                    className="w-full mt-4 bg-green-800 hover:bg-green-900 text-white font-black py-3 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1"
+                    className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-2.5 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm"
                   >
                     המשך לשאלה הבאה
                   </button>
@@ -1321,21 +1286,13 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
               )}
             </div>
           ) : (
-            <div className="space-y-4">
-              {/* Strategy bar */}
-              <div className="flex gap-2 mb-4">
-                {[1, 2, 3].map(s => (
-                  <div key={s} className={`flex-grow h-1 rounded-full ${openStep >= s ? 'bg-green-600' : 'bg-green-100'}`} />
-                ))}
-              </div>
-
+            <div className="space-y-3">
               {openStep === 1 && (
-                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-                  <h4 className="text-lg font-black text-green-900 flex items-center gap-2">
-                    <Target className="w-5 h-5" /> שלב 1: זיהוי מילת ההוראה
+                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-3">
+                  <h4 className="text-sm font-black text-green-900 flex items-center gap-2 mb-1">
+                    <Target className="w-4 h-4" /> זיהוי מילת ההוראה
                   </h4>
-                  <p className="text-sm text-green-800 font-bold">מה הבוחן מבקש ממך לבצע בשאלה זו?</p>
-                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-5 gap-1.5">
                     {['הסבירו', 'תארו', 'ציינו', 'השוו', 'נמקו'].map(word => (
                       <button 
                         key={word}
@@ -1343,25 +1300,19 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
                           const correct = (currentQ as any).instructionWord === word;
                           if (correct) {
                             setOpenInstructionResults(prev => ({ ...prev, [qIndex]: true }));
-                            setInstructionFeedback({ isCorrect: true, text: 'נכון מאוד! זו מילת ההוראה המתאימה.' });
-                            setTimeout(() => {
-                              setOpenStep(2);
-                              setInstructionFeedback(null);
-                            }, 1500);
+                            setInstructionFeedback({ isCorrect: true, text: 'נכון!' });
+                            setTimeout(() => { setOpenStep(2); setInstructionFeedback(null); }, 800);
                           } else {
                             setOpenInstructionResults(prev => ({ ...prev, [qIndex]: false }));
-                            setInstructionFeedback({ 
-                              isCorrect: false, 
-                              text: `לא בדיוק. מילת ההוראה הנכונה היא "${(currentQ as any).instructionWord}".` 
-                            });
+                            setInstructionFeedback({ isCorrect: false, text: `הנכונה: ${(currentQ as any).instructionWord}` });
                           }
                         }}
-                        className={`p-3 border-2 rounded-xl font-bold transition-all text-center text-sm ${
+                        className={`p-2 border-2 rounded-lg font-bold transition-all text-center text-xs ${
                           instructionFeedback?.isCorrect && (currentQ as any).instructionWord === word
-                            ? 'bg-green-100 border-green-500 text-green-900 ring-2 ring-green-200'
-                            : instructionFeedback && !instructionFeedback.isCorrect && word === instructionFeedback.text.split('"')[1]
+                            ? 'bg-green-100 border-green-500 text-green-900'
+                            : instructionFeedback && !instructionFeedback.isCorrect && word === instructionFeedback.text.split(': ')[1]
                               ? 'bg-amber-100 border-amber-500 text-amber-900'
-                              : 'bg-white border-green-100 hover:border-green-600 text-green-900'
+                              : 'bg-white border-green-100 hover:border-green-600 text-green-900 shadow-sm'
                         }`}
                       >
                         {word}
@@ -1369,118 +1320,84 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
                     ))}
                   </div>
                   
-                  <AnimatePresence>
-                    {instructionFeedback && (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }} 
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                        className={`p-3 rounded-xl border-2 flex items-center gap-3 text-sm ${
-                          instructionFeedback.isCorrect ? 'bg-green-50 border-green-200 text-green-800' : 'bg-amber-50 border-amber-200 text-amber-800'
-                        }`}
-                      >
-                        {instructionFeedback.isCorrect ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
-                        <span className="font-bold">{instructionFeedback.text}</span>
-                        {!instructionFeedback.isCorrect && (
-                          <button 
-                            onClick={() => { setOpenStep(2); setInstructionFeedback(null); }}
-                            className="mr-auto bg-amber-200 hover:bg-amber-300 text-amber-900 px-2 py-1 rounded-lg text-[10px] font-black transition-colors"
-                          >
-                            הבנתי
-                          </button>
-                        )}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {instructionFeedback && !instructionFeedback.isCorrect && (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-2 bg-amber-50 border border-amber-200 rounded-lg flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-amber-900">{instructionFeedback.text}</span>
+                      <button onClick={() => { setOpenStep(2); setInstructionFeedback(null); }} className="bg-amber-200 px-2 py-0.5 rounded text-[10px] font-black">המשך</button>
+                    </motion.div>
+                  )}
                 </motion.div>
               )}
 
               {openStep === 2 && (
-                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-                  <h4 className="text-lg font-black text-green-900 flex items-center gap-2">
-                    <Brain className="w-5 h-5" /> שלב 2: מיפוי הידע (3 השאלות)
-                  </h4>
-                  <div className="bg-white p-4 rounded-xl border-2 border-green-100 shadow-sm space-y-3 text-sm">
-                    <p className="text-green-900 font-bold">חשבו רגע:</p>
-                    <ul className="space-y-2">
-                      <li className="flex gap-2 items-center text-green-800 font-medium">
-                        <div className="w-5 h-5 flex-none rounded-full bg-green-100 flex items-center justify-center text-[10px]">1</div>
-                        מה שואלים אותי בדיוק?
-                      </li>
-                      <li className="flex gap-2 items-center text-green-800 font-medium">
-                        <div className="w-5 h-5 flex-none rounded-full bg-green-100 flex items-center justify-center text-[10px]">2</div>
-                        מה הידע הביולוגי הרלוונטי? (אברונים/תהליכים)
-                      </li>
-                      <li className="flex gap-2 items-center text-green-800 font-medium">
-                        <div className="w-5 h-5 flex-none rounded-full bg-green-100 flex items-center justify-center text-[10px]">3</div>
-                        איך בונים שרשור נסיבתי בלי דילוגים?
-                      </li>
-                    </ul>
+                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-3 text-center">
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { t: 'מה שואלים?', i: '1' },
+                      { t: 'ידע ביולוגי', i: '2' },
+                      { t: 'שרשור נסיבתי', i: '3' }
+                    ].map(item => (
+                      <div key={item.i} className="bg-white p-2 rounded-xl border border-green-100 shadow-sm">
+                        <div className="w-5 h-5 rounded-full bg-green-200 flex items-center justify-center text-[10px] font-bold mx-auto mb-1">{item.i}</div>
+                        <div className="text-[11px] font-bold text-green-900 leading-tight">{item.t}</div>
+                      </div>
+                    ))}
                   </div>
                   <button 
                     onClick={() => setOpenStep(3)}
-                    className="w-full bg-green-800 text-white font-black py-4 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1"
+                    className="w-full bg-green-800 text-white font-black py-2.5 rounded-xl shadow-md border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm"
                   >
-                    אני מוכן לכתוב את התשובה
+                    אני מוכן לכתוב
                   </button>
                 </motion.div>
               )}
 
               {openStep === 3 && (
-                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-4">
-                  <h4 className="text-lg font-black text-green-900 flex items-center gap-2">
-                    <AlignLeft className="w-5 h-5" /> שלב 3: כתיבות
-                  </h4>
-                  <textarea
-                    className="w-full p-4 rounded-xl border-2 border-green-200 focus:border-green-600 outline-none min-h-[120px] shadow-inner font-bold text-green-900 bg-white text-sm"
-                    placeholder="כתבו בשרשור נסיבתי: סיבה -> שלבי ביניים -> תוצאה..."
-                    value={openAnswer}
-                    onChange={e => setOpenAnswer(e.target.value)}
-                  />
-                  
+                <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-3">
                   {!showOpenRubric ? (
-                    <button
-                      disabled={openAnswer.trim().length < 5}
-                      onClick={() => { setShowOpenRubric(true); }}
-                      className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-xl disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1"
-                    >
-                      הגש ובדוק מול המחוון המפורט
-                    </button>
+                    <>
+                      <textarea
+                        className="w-full p-3 rounded-xl border-2 border-green-200 focus:border-green-600 outline-none min-h-[120px] shadow-inner font-bold text-green-900 bg-white text-xs"
+                        placeholder="כתבו את התשובה בשרשור נסיבתי..."
+                        value={openAnswer}
+                        onChange={e => setOpenAnswer(e.target.value)}
+                      />
+                      <button
+                        disabled={openAnswer.trim().length < 3}
+                        onClick={() => setShowOpenRubric(true)}
+                        className="w-full bg-green-800 text-white font-black py-3 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm"
+                      >
+                        הגש ובדוק מול המחוון
+                      </button>
+                    </>
                   ) : (
-                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pb-4">
-                      <div className="bg-green-100 border-4 border-green-300 p-8 rounded-3xl shadow-xl relative">
-                        <div className="absolute -top-4 -right-4 bg-green-800 text-white px-5 py-1 rounded-full text-xs font-black shadow-md">מחוון בגרות רשמי</div>
-                        <p className="text-green-950 font-black text-lg leading-relaxed whitespace-pre-line">{currentQ.rubric}</p>
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-2 gap-2 max-h-[180px]">
+                        <div className="bg-white border-2 border-green-200 p-2.5 rounded-xl shadow-sm overflow-y-auto">
+                          <div className="text-[9px] bg-green-800 text-white px-2 py-0.5 rounded-full inline-block mb-1 font-black leading-none">מחוון</div>
+                          <p className="text-green-950 font-black text-[11px] leading-relaxed whitespace-pre-line">{currentQ.rubric}</p>
+                        </div>
+                        <div className="bg-slate-50 border-2 border-slate-200 p-2.5 rounded-xl shadow-sm overflow-y-auto">
+                          <div className="text-[9px] bg-slate-600 text-white px-2 py-0.5 rounded-full inline-block mb-1 font-black leading-none">תשובתך</div>
+                          <p className="text-slate-800 font-bold text-[11px] leading-relaxed italic">{openAnswer}</p>
+                        </div>
                       </div>
-                      <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200">
-                        <p className="text-amber-900 text-sm font-bold flex items-center gap-2">
-                          <Lightbulb className="w-5 h-5" /> השוו את התשובה שלכם למחוון. האם פירטתם את כל שלבי השרשור?
-                        </p>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
+                      
+                      <div className="grid grid-cols-2 gap-2">
                         <button
-                          onClick={() => {
-                            setOpenSelfAssessment(prev => ({ ...prev, [qIndex]: true }));
-                            handleNext();
-                          }}
-                          className="flex flex-col items-center justify-center p-4 bg-white border-2 border-green-200 rounded-2xl hover:border-green-600 hover:bg-green-50 transition-all group"
+                          onClick={() => { setOpenSelfAssessment(prev => ({ ...prev, [qIndex]: true })); handleNext(); }}
+                          className="flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-xl shadow-md text-xs font-black"
                         >
-                          <CheckCircle2 className="w-6 h-6 text-green-600 mb-2 group-hover:scale-110 transition-transform" />
-                          <span className="font-bold text-green-900 text-xs">התשובה שלי מלאה</span>
+                          <CheckCircle2 className="w-3.5 h-3.5" /> תשובה מלאה
                         </button>
                         <button
-                          onClick={() => {
-                            setOpenSelfAssessment(prev => ({ ...prev, [qIndex]: false }));
-                            handleNext();
-                          }}
-                          className="flex flex-col items-center justify-center p-4 bg-white border-2 border-amber-200 rounded-2xl hover:border-amber-600 hover:bg-amber-50 transition-all group"
+                          onClick={() => { setOpenSelfAssessment(prev => ({ ...prev, [qIndex]: false })); handleNext(); }}
+                          className="flex items-center justify-center gap-2 py-2.5 bg-amber-500 text-white rounded-xl shadow-md text-xs font-black"
                         >
-                          <AlertCircle className="w-6 h-6 text-amber-600 mb-2 group-hover:scale-110 transition-transform" />
-                          <span className="font-bold text-amber-900 text-xs">זקוקה לשיפור</span>
+                          <AlertCircle className="w-3.5 h-3.5" /> זקוקה לשיפור
                         </button>
                       </div>
-                    </motion.div>
+                    </div>
                   )}
                 </motion.div>
               )}
