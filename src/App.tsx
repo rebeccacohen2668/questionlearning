@@ -729,10 +729,19 @@ function PracticeThreeQuestions({ questions, theme, onFinish }: { questions: any
           {step === 5 && (
             <motion.div key="s5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
               <h4 className="text-lg font-black text-green-800 flex items-center justify-center gap-2"><CheckCircle2 className="w-5 h-5"/> השוואה למחוון הפיצוח</h4>
-              <div className={`${theme.bg} border-2 ${theme.border} p-5 rounded-2xl shadow-md relative`}>
-                <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">התשובה המושלמת</div>
-                <span className="whitespace-pre-line text-green-900 font-black text-base leading-relaxed">{q.rubric}</span>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-slate-50 border-2 border-slate-200 p-4 rounded-xl shadow-sm relative">
+                  <div className="absolute -top-3 -right-3 bg-slate-600 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">הניסוח שלך</div>
+                  <p className="text-slate-800 font-bold text-sm leading-relaxed whitespace-pre-line italic underline decoration-slate-200 underline-offset-4">{inputs.final}</p>
+                </div>
+                
+                <div className={`${theme.bg} border-2 ${theme.border} p-4 rounded-xl shadow-md relative`}>
+                  <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">תשובת המומחה</div>
+                  <p className="text-green-900 font-black text-sm leading-relaxed whitespace-pre-line">{q.rubric}</p>
+                </div>
               </div>
+
               <button onClick={handleNextQ} className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-xl flex items-center justify-center gap-3 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm">
                 {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'סיום הפרק'} <ArrowRight className="w-4 h-4 rotate-180" />
               </button>
@@ -836,19 +845,27 @@ function PracticeWords({ questions, theme, onFinish }: { questions: any[], theme
           </motion.div>
         )}
 
-        {step === 3 && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-             <h4 className="text-lg font-black text-green-800 flex items-center justify-center gap-2 mb-2"><CheckCircle2 className="w-5 h-5"/> השוואה למחוון</h4>
-             <div className="bg-white border border-green-100 p-3 rounded-xl shadow-sm text-sm"><strong className="block text-green-800 text-[10px] mb-1 uppercase tracking-wide">הניסוח שלכם:</strong> <span className="font-bold text-green-950">{finalAnswer}</span></div>
-             <div className={`${theme.bg} border-2 ${theme.border} p-5 rounded-2xl shadow-md relative`}>
-                <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">תשובת מומחה</div>
-                <span className="whitespace-pre-line text-green-900 font-black text-base leading-relaxed">{q.rubric}</span>
-              </div>
-            <button onClick={handleNextQ} className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-xl flex items-center justify-center gap-3 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm">
-              {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'לפרק הבא'} <ArrowRight className="w-4 h-4 rotate-180" />
-            </button>
-          </motion.div>
-        )}
+          {step === 3 && (
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+               <h4 className="text-lg font-black text-green-800 flex items-center justify-center gap-2 mb-2"><CheckCircle2 className="w-5 h-5"/> השוואה למחוון הפיצוח</h4>
+               
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                 <div className="bg-slate-50 border-2 border-slate-200 p-4 rounded-xl shadow-sm relative">
+                   <div className="absolute -top-3 -right-3 bg-slate-600 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">הניסוח שלך</div>
+                   <p className="text-slate-800 font-bold text-sm leading-relaxed whitespace-pre-line italic underline decoration-slate-200 underline-offset-4">{finalAnswer}</p>
+                 </div>
+                 
+                 <div className={`${theme.bg} border-2 ${theme.border} p-4 rounded-xl shadow-md relative`}>
+                   <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">תשובת המומחה</div>
+                   <p className="text-green-900 font-black text-sm leading-relaxed whitespace-pre-line">{q.rubric}</p>
+                 </div>
+               </div>
+
+              <button onClick={handleNextQ} className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-xl flex items-center justify-center gap-3 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm">
+                {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'לפרק הבא'} <ArrowRight className="w-4 h-4 rotate-180" />
+              </button>
+            </motion.div>
+          )}
       </div>
     </div>
   );
@@ -1034,9 +1051,18 @@ function PracticeChain({ questions, theme, onFinish }: { questions: any[], theme
                 </button>
               ) : (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4 pt-2">
-                  <div className="bg-green-50 border-2 border-green-200 p-5 rounded-2xl shadow-lg relative">
-                    <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md">מחוון בגרות</div>
-                    <p className="text-green-950 font-black text-base leading-relaxed text-right">{q.rubric}</p>
+                  <h4 className="text-lg font-black text-green-800 flex items-center justify-center gap-2 mb-2"><CheckCircle2 className="w-5 h-5"/> השוואה למחוון הפיצוח</h4>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-slate-50 border-2 border-slate-200 p-4 rounded-xl shadow-sm relative text-right">
+                      <div className="absolute -top-3 -right-3 bg-slate-600 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">הניסוח שלך</div>
+                      <p className="text-slate-800 font-bold text-sm leading-relaxed whitespace-pre-line italic underline decoration-slate-200 underline-offset-4">{studentAnswer}</p>
+                    </div>
+                    
+                    <div className="bg-green-50 border-2 border-green-200 p-4 rounded-xl shadow-md relative text-right">
+                      <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md">מחוון בגרות</div>
+                      <p className="text-green-950 font-black text-sm leading-relaxed whitespace-pre-line">{q.rubric}</p>
+                    </div>
                   </div>
 
                   <button 
@@ -1065,7 +1091,7 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
   // Results for scoring
   const [closedResults, setClosedResults] = useState<Record<number, boolean>>({});
   const [openInstructionResults, setOpenInstructionResults] = useState<Record<number, boolean>>({});
-  const [openSelfAssessment, setOpenSelfAssessment] = useState<Record<number, boolean>>({});
+  const [openSelfAssessment, setOpenSelfAssessment] = useState<Record<number, 'full' | 'partial' | 'none'>>({});
   
   // Open questions states
   const [openStep, setOpenStep] = useState(1); // 1: Instruction, 2: 3 Questions, 3: Answer
@@ -1083,16 +1109,36 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
   const currentQ = allQuestions[qIndex];
 
   const calculateGrade = () => {
-    let closedScore = 0;
-    // Each closed q is worth 3 points (Total 60)
-    Object.keys(closedResults).forEach(key => { if(closedResults[Number(key)]) closedScore += 3; });
+    const closedCount = bagrutExamData.closedQuestions.length;
+    const openCount = bagrutExamData.openQuestions.length + bagrutExamData.microbiologyQuestions.length;
     
-    let openScore = 0;
-    // Each open q: 1 point for instruction word, 3 for self-assessed content match (Total 40)
-    Object.keys(openInstructionResults).forEach(key => { if(openInstructionResults[Number(key)]) openScore += 1; });
-    Object.keys(openSelfAssessment).forEach(key => { if(openSelfAssessment[Number(key)]) openScore += 3; });
+    // Closed questions total 40 points, Open questions total 60 points
+    const closedWeight = 40 / closedCount;
+    const openWeight = 60 / openCount;
     
-    return Math.min(100, closedScore + openScore);
+    // Within an open question: 1 point for instruction word, the rest for content
+    const instructionWeight = 1;
+    const contentWeight = openWeight - instructionWeight;
+    
+    let totalScore = 0;
+    
+    // Closed questions
+    Object.values(closedResults).forEach(isCorrect => {
+      if (isCorrect) totalScore += closedWeight;
+    });
+    
+    // Open questions instruction
+    Object.values(openInstructionResults).forEach(isCorrect => {
+      if (isCorrect) totalScore += instructionWeight;
+    });
+    
+    // Open questions content self-assessment
+    Object.values(openSelfAssessment).forEach(assessment => {
+      if (assessment === 'full') totalScore += contentWeight;
+      else if (assessment === 'partial') totalScore += contentWeight / 2;
+    });
+    
+    return Math.round(Math.min(100, totalScore));
   };
 
   const getGradeCategory = (grade: number) => {
@@ -1134,13 +1180,7 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
     }
   };
 
-  const currentTotalScore = useMemo(() => {
-    let score = 0;
-    Object.values(closedResults).forEach(v => { if(v) score += 3; });
-    Object.values(openInstructionResults).forEach(v => { if(v) score += 1; });
-    Object.values(openSelfAssessment).forEach(v => { if(v) score += 3; });
-    return score;
-  }, [closedResults, openInstructionResults, openSelfAssessment]);
+  const currentTotalScore = useMemo(() => calculateGrade(), [closedResults, openInstructionResults, openSelfAssessment]);
 
   if (isDone) {
     const finalGrade = calculateGrade();
@@ -1168,12 +1208,16 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
 
         <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto mb-10">
           <div className="bg-white p-4 rounded-2xl border border-green-100 shadow-sm">
-            <div className="text-2xl font-black text-green-800">{Object.values(closedResults).filter(v => v).length}/20</div>
+            <div className="text-2xl font-black text-green-800">
+              {Object.values(closedResults).filter(v => v).length}/{bagrutExamData.closedQuestions.length}
+            </div>
             <div className="text-[10px] font-bold text-slate-500">שאלות סגורות נכונות</div>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-green-100 shadow-sm">
-            <div className="text-2xl font-black text-green-800">{Object.values(openSelfAssessment).filter(v => v).length}/10</div>
-            <div className="text-[10px] font-bold text-slate-500">שאלות פתוחות במלואן</div>
+            <div className="text-2xl font-black text-green-800">
+              {Object.values(openSelfAssessment).filter(v => v === 'full' || v === 'partial').length}/{bagrutExamData.openQuestions.length + bagrutExamData.microbiologyQuestions.length}
+            </div>
+            <div className="text-[10px] font-bold text-slate-500">שאלות פתוחות (מלא/חלקי)</div>
           </div>
         </div>
 
@@ -1383,18 +1427,24 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
                         </div>
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-3 gap-2">
                         <button
-                          onClick={() => { setOpenSelfAssessment(prev => ({ ...prev, [qIndex]: true })); handleNext(); }}
-                          className="flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-xl shadow-md text-xs font-black"
+                          onClick={() => { setOpenSelfAssessment(prev => ({ ...prev, [qIndex]: 'full' })); handleNext(); }}
+                          className="flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-xl shadow-md text-[10px] font-black"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5" /> תשובה מלאה
                         </button>
                         <button
-                          onClick={() => { setOpenSelfAssessment(prev => ({ ...prev, [qIndex]: false })); handleNext(); }}
-                          className="flex items-center justify-center gap-2 py-2.5 bg-amber-500 text-white rounded-xl shadow-md text-xs font-black"
+                          onClick={() => { setOpenSelfAssessment(prev => ({ ...prev, [qIndex]: 'partial' })); handleNext(); }}
+                          className="flex items-center justify-center gap-2 py-2.5 bg-amber-500 text-white rounded-xl shadow-md text-[10px] font-black"
                         >
-                          <AlertCircle className="w-3.5 h-3.5" /> זקוקה לשיפור
+                          <AlertCircle className="w-3.5 h-3.5" /> עניתי חלקית
+                        </button>
+                        <button
+                          onClick={() => { setOpenSelfAssessment(prev => ({ ...prev, [qIndex]: 'none' })); handleNext(); }}
+                          className="flex items-center justify-center gap-2 py-2.5 bg-red-500 text-white rounded-xl shadow-md text-[10px] font-black"
+                        >
+                          <XCircle className="w-3.5 h-3.5" /> לא עניתי נכון
                         </button>
                       </div>
                     </div>
