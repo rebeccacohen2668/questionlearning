@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Brain, ChevronLeft, CheckCircle2, 
-  XCircle, Trash2, Eye, Target, ListChecks, Lightbulb, 
+  XCircle, Trash2, Eye, Target, Search, ListChecks, Lightbulb, 
   Activity, BookOpen, Star, ArrowRight, 
   MessageCircleQuestion, Link, Award, ArrowUp, ArrowDown, AlertCircle, Leaf,
   Microscope, TestTube, AlignLeft, Scale, Home
@@ -456,7 +456,7 @@ function PracticeClosed({ questions, theme, onFinish }: { questions: any[], them
     <div className="bg-white rounded-2xl shadow-xl border-2 border-green-200 overflow-hidden max-w-2xl mx-auto">
       <div className="p-2 bg-green-50 border-b border-green-200 flex justify-between font-bold text-[10px] text-green-800 uppercase tracking-widest">
         <span>שאלה {qIndex + 1} מתוך {questions.length}</span>
-        <span className={`${theme.text}`}>אסטרטגיית אלימינציה</span>
+        <span className={`${theme.text}`}>אסטרטגית אלימינציה: מחקו את המסיחים שאתם חושבים שהם בטוח לא נכונים</span>
       </div>
       
       <div className="p-4 md:p-5 bg-white border-b border-green-50 shadow-sm">
@@ -709,9 +709,17 @@ function PracticeThreeQuestions({ questions, theme, onFinish }: { questions: any
                      {currentOptions[selectedOption!].isCorrect ? <CheckCircle2 className="w-4 h-4 text-green-600" /> : <XCircle className="w-4 h-4 text-red-500" />}
                      <h5 className="text-sm font-black text-green-900">{currentOptions[selectedOption!].isCorrect ? 'זיהוי מעולה!' : 'לא בדיוק...'}</h5>
                    </div>
-                   <p className="text-xs text-green-800 font-bold leading-relaxed">המחוון לשלב זה: {step === 1 ? q.stage1Rubric : step === 2 ? q.stage2Rubric : q.stage3Rubric}</p>
-                   <button onClick={nextStep} className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-3 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 transition-all text-xs`}>
-                      המשך לשלב הבא <ArrowRight className="w-4 h-4 inline-block mr-2 rotate-180" />
+                   
+                   <div className={`p-2.5 rounded-lg border-r-4 ${currentOptions[selectedOption!].isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-300'}`}>
+                     <p className="text-xs text-slate-900 font-bold leading-tight text-right">
+                       {currentOptions[selectedOption!].explanation || (currentOptions[selectedOption!].isCorrect ? 'זהו אכן הזיהוי המדויק לשלב זה.' : 'האופציה הזו אינה משקפת נכון את דרישות השלב.')}
+                     </p>
+                   </div>
+
+                   <p className="text-xs text-green-800 font-bold leading-relaxed border-t border-green-50 pt-2">המחוון לשלב זה: {step === 1 ? q.stage1Rubric : step === 2 ? q.stage2Rubric : q.stage3Rubric}</p>
+                   
+                   <button onClick={nextStep} className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-3 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 transition-all text-xs flex items-center justify-center gap-2`}>
+                      {step < 3 ? 'לשלב הבא' : 'לניסוח התשובה'} <ArrowRight className="w-4 h-4 rotate-180" />
                    </button>
                 </motion.div>
               )}
@@ -816,22 +824,26 @@ function PracticeWords({ questions, theme, onFinish }: { questions: any[], theme
 
         {step === 2 && (
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-4">
-            <div className={`p-3 rounded-xl shadow-inner flex items-center gap-3 ${shuffledOptions[selectedOption!].isCorrect ? 'bg-green-50 border border-green-300' : 'bg-red-50 border border-red-300'}`}>
-              <div>
-                {shuffledOptions[selectedOption!].isCorrect ? <CheckCircle2 className="w-6 h-6 text-green-700"/> : <AlertCircle className="w-6 h-6 text-red-600" />}
-              </div>
-              <div className="flex-grow text-right">
+            <div className={`p-4 rounded-xl shadow-md border-r-8 space-y-2 ${shuffledOptions[selectedOption!].isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-400'}`}>
+              <div className="flex items-center gap-3">
+                {shuffledOptions[selectedOption!].isCorrect ? <CheckCircle2 className="w-6 h-6 text-green-700"/> : <XCircle className="w-6 h-6 text-red-600" />}
                 <h4 className={`text-sm font-black ${shuffledOptions[selectedOption!].isCorrect ? 'text-green-900' : 'text-red-900'}`}>
                   {shuffledOptions[selectedOption!].isCorrect ? `זיהוי מעולה!` : `לא בדיוק...`}
                 </h4>
-                <p className="text-[11px] text-slate-700 font-bold whitespace-nowrap">
-                  {shuffledOptions[selectedOption!].isCorrect ? 'עכשיו נסחו את התשובה המלאה:' : 'שימו לב לדרישות המילה. נסו לנסח תשובה מלאה:'}
+              </div>
+              <p className="text-xs text-slate-800 font-bold leading-relaxed text-right">
+                {shuffledOptions[selectedOption!].explanation || (shuffledOptions[selectedOption!].isCorrect ? 'נכון, המילה מחייבת התייחסות לנקודות אלו בדיוק.' : 'שימו לב לדרישות המילה - עליכם לכלול את המאפיינים המתאימים להנחיה זו.')}
+              </p>
+              <div className="pt-2 border-t border-black/5">
+                <p className="text-[10px] text-slate-600 font-black uppercase">הנחיית הפיצוח:</p>
+                <p className="text-[11px] text-slate-700 font-bold leading-tight">
+                  {shuffledOptions[selectedOption!].isCorrect ? 'עכשיו נסחו את התשובה המלאה המקיפה את הנקודות הללו:' : 'נסו בכל זאת לנסח תשובה מלאה המביאה לידי ביטוי את הדרישות:'}
                 </p>
               </div>
             </div>
             <textarea 
               className={`w-full p-4 rounded-xl border-2 border-green-200 focus:border-green-600 outline-none min-h-[120px] shadow-inner font-bold text-green-900 bg-white text-sm`} 
-              placeholder="כתוב כאן..." 
+              placeholder="כתבו כאן את תשובת הבגרות שלכם..." 
               value={finalAnswer} 
               onChange={e => setFinalAnswer(e.target.value)} 
             />
@@ -840,12 +852,12 @@ function PracticeWords({ questions, theme, onFinish }: { questions: any[], theme
               disabled={finalAnswer.length < 5} 
               className={`w-full bg-green-800 hover:bg-green-900 text-white font-black py-3.5 rounded-xl shadow-lg disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm`}
             >
-              סיימתי, בדוק אותי
+              אשר והמשך למחוון
             </button>
           </motion.div>
         )}
 
-          {step === 3 && (
+        {step === 3 && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
                <h4 className="text-lg font-black text-green-800 flex items-center justify-center gap-2 mb-2"><CheckCircle2 className="w-5 h-5"/> השוואה למחוון הפיצוח</h4>
                
@@ -874,16 +886,13 @@ function PracticeWords({ questions, theme, onFinish }: { questions: any[], theme
 // ==========================================
 // 4. PRACTICE: CAUSAL CHAIN (Drag & Drop replacement)
 // ==========================================
-
-// ==========================================
-// 4. PRACTICE: CAUSAL CHAIN (Drag & Drop replacement)
-// ==========================================
 function PracticeChain({ questions, theme, onFinish }: { questions: any[], theme: any, onFinish: () => void }) {
   const [qIndex, setQIndex] = useState(0);
   const [step, setStep] = useState(1);
   const [sentences, setSentences] = useState<any[]>([]);
   const [userOrders, setUserOrders] = useState<Record<number, string>>({});
   const [errorMsg, setErrorMsg] = useState('');
+  const [studentAnswer, setStudentAnswer] = useState('');
 
   const q = questions[qIndex];
 
@@ -893,6 +902,7 @@ function PracticeChain({ questions, theme, onFinish }: { questions: any[], theme
     setUserOrders({});
     setStep(1);
     setErrorMsg('');
+    setStudentAnswer('');
   }, [qIndex, q]);
 
   const checkOrder = () => {
@@ -901,30 +911,13 @@ function PracticeChain({ questions, theme, onFinish }: { questions: any[], theme
       setErrorMsg('אנא מלאו מספר סדר עבור כל המשפטים.');
       return;
     }
-
-    const isCorrect = sentences.every(s => parseInt(userOrders[s.id]) === s.order);
-    if (isCorrect) {
-      setStep(2);
-    }
-    else setErrorMsg('הסדר אינו מדויק. חפשו את ה"סיבה" הראשונית (1) ומספרו את השלבים.');
-  };
-
-  const startWriting = () => {
-    setStep(3);
+    setStep(2);
   };
 
   const handleNextQ = () => {
     if (qIndex < questions.length - 1) setQIndex(p => p + 1);
     else onFinish();
   };
-
-  const [studentAnswer, setStudentAnswer] = useState('');
-  const [showFeedback, setShowFeedback] = useState(false);
-
-  useEffect(() => {
-    setStudentAnswer('');
-    setShowFeedback(false);
-  }, [qIndex]);
 
   const orderedSentences = useMemo(() => {
     return [...q.sentences].sort((a, b) => a.order - b.order);
@@ -988,91 +981,84 @@ function PracticeChain({ questions, theme, onFinish }: { questions: any[], theme
           )}
 
           {step === 2 && (
-             <motion.div key="s2" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center space-y-6">
-                <div className="space-y-2">
+             <motion.div key="s2" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6">
+                <div className="text-center space-y-2">
                   <div className="inline-flex items-center justify-center p-3 bg-green-100 rounded-full border-2 border-white shadow-md">
-                    <CheckCircle2 className="w-8 h-8 text-green-700"/>
+                    <Search className="w-8 h-8 text-green-700"/>
                   </div>
-                  <h4 className="text-xl font-black text-green-900 tracking-tight">מספור מדויק!</h4>
+                  <h4 className="text-xl font-black text-green-900 tracking-tight">כך נראה שרשור מדעי נכון</h4>
+                  <p className="text-xs font-bold text-green-700">השתמשו בשלבים אלו כדי לנסח את התשובה המלאה למטה</p>
                 </div>
 
-                <div className={`bg-white border-2 border-green-100 p-5 rounded-2xl shadow-inner relative text-right`}>
-                  <div className="space-y-4">
-                    {orderedSentences.map((s, i) => (
-                      <div key={i} className="flex gap-4 items-start">
-                        <div className={`w-6 h-6 rounded-lg ${theme.primary} text-white flex items-center justify-center font-black flex-shrink-0 shadow-sm text-xs`}>{i+1}</div>
-                        <p className={`text-green-950 font-bold text-sm leading-snug pt-0.5`}>{s.text}</p>
-                      </div>
-                    ))}
+                <div className="bg-white border-2 border-green-100 p-4 rounded-2xl shadow-inner relative text-right">
+                  <div className="absolute -top-3 -right-3 bg-slate-600 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">שלבי השרשור</div>
+                  <div className="space-y-2 pt-2">
+                    {orderedSentences.map((s, i) => {
+                      const isCause = i === 0;
+                      const isOutcome = i === orderedSentences.length - 1;
+                      return (
+                        <div key={i} className={`flex gap-3 items-start p-2 rounded-xl transition-colors ${isCause ? 'bg-cyan-50 border border-cyan-100' : isOutcome ? 'bg-purple-50 border border-purple-100' : ''}`}>
+                          <div className={`w-5 h-5 rounded-lg ${isCause ? 'bg-cyan-600' : isOutcome ? 'bg-purple-600' : theme.primary} text-white flex items-center justify-center font-black flex-shrink-0 shadow-sm text-[10px]`}>{i+1}</div>
+                          <div className="flex-grow">
+                            <p className={`font-bold text-[11px] leading-snug ${isCause ? 'text-cyan-900' : isOutcome ? 'text-purple-900' : 'text-green-950'}`}>
+                              {s.text}
+                            </p>
+                            {isCause && <span className="text-[8px] font-black text-cyan-600 uppercase tracking-tighter block mt-0.5">סיבה ראשונית (Input)</span>}
+                            {isOutcome && <span className="text-[8px] font-black text-purple-600 uppercase tracking-tighter block mt-0.5">תוצאה סופית (Output)</span>}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
+                </div>
+
+                <div className="space-y-2 text-right">
+                  <label className="text-sm font-black text-green-900 block px-1">ניסוח תשובת בגרות מנצחת:</label>
+                  <textarea 
+                    className={`w-full p-4 rounded-xl border-2 border-green-100 focus:border-green-800 outline-none min-h-[140px] shadow-inner font-bold text-green-900 bg-white text-sm`} 
+                    value={studentAnswer}
+                    onChange={e => setStudentAnswer(e.target.value)}
+                    placeholder="חברו את שלבי השרשור למעלה לתשובה קולחת ומקצועית..."
+                  />
                 </div>
                 
                 <button 
-                  onClick={startWriting} 
+                  onClick={() => setStep(3)} 
+                  disabled={studentAnswer.length < 5}
                   className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm flex items-center justify-center gap-2"
                 >
-                  לניסוח תשובה מלאה <ArrowRight className="w-4 h-4 rotate-180" />
+                  בדוק תשובה מול המחוון <CheckCircle2 className="w-4 h-4" />
                 </button>
-            </motion.div>
+             </motion.div>
           )}
 
           {step === 3 && (
-            <motion.div key="s3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-              <div className="flex justify-between items-center mb-1">
-                <h4 className="text-lg font-black text-green-900">ניסוח תשובת בגרות</h4>
-                <div className="text-[9px] font-black text-green-700 bg-green-50 px-2.5 py-1 rounded-full uppercase">שלב הניסוח</div>
-              </div>
+            <motion.div key="s3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+               <div className="text-center space-y-2">
+                 <div className="inline-flex items-center justify-center p-3 bg-green-100 rounded-full border-2 border-white shadow-md">
+                   <Target className="w-8 h-8 text-green-700"/>
+                 </div>
+                 <h4 className="text-xl font-black text-green-900 tracking-tight">השוואה למחוון הפיצוח</h4>
+               </div>
 
-              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 shadow-inner">
-                <div className="flex flex-wrap gap-1.5 items-center">
-                  {orderedSentences.map((s, i) => (
-                    <div key={i} className="bg-white px-2 py-1 rounded-lg border border-slate-200 text-slate-800 font-bold shadow-sm flex items-center gap-1.5">
-                      <span className="bg-slate-100 text-slate-500 w-4 h-4 flex items-center justify-center rounded text-[9px]">{i+1}</span>
-                      <span className="text-[10px] whitespace-nowrap">{s.text.substring(0, 15)}...</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-right">
+                 <div className="bg-slate-50 border-2 border-slate-200 p-4 rounded-2xl shadow-inner relative h-full">
+                   <div className="absolute -top-3 -right-3 bg-slate-600 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">הניסוח שלך</div>
+                   <p className="text-slate-800 font-bold text-xs leading-relaxed whitespace-pre-line pt-2 italic underline underline-offset-4 decoration-slate-200">{studentAnswer}</p>
+                 </div>
 
-              <textarea 
-                className={`w-full p-4 rounded-xl border-2 border-green-100 focus:border-green-800 outline-none min-h-[140px] shadow-inner font-bold text-green-900 bg-white text-sm`}
-                value={studentAnswer}
-                onChange={e => setStudentAnswer(e.target.value)}
-                placeholder="חברו את שלבי השרשור לתשובה קולחת..."
-              />
-
-              {!showFeedback ? (
-                <button 
-                  onClick={() => setShowFeedback(true)}
-                  disabled={studentAnswer.length < 5}
-                  className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-lg disabled:opacity-50 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm transition-all"
-                >
-                  בדוק מול מחוון הבגרות
-                </button>
-              ) : (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4 pt-2">
-                  <h4 className="text-lg font-black text-green-800 flex items-center justify-center gap-2 mb-2"><CheckCircle2 className="w-5 h-5"/> השוואה למחוון הפיצוח</h4>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-slate-50 border-2 border-slate-200 p-4 rounded-xl shadow-sm relative text-right">
-                      <div className="absolute -top-3 -right-3 bg-slate-600 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">הניסוח שלך</div>
-                      <p className="text-slate-800 font-bold text-sm leading-relaxed whitespace-pre-line italic underline decoration-slate-200 underline-offset-4">{studentAnswer}</p>
-                    </div>
-                    
-                    <div className="bg-green-50 border-2 border-green-200 p-4 rounded-xl shadow-md relative text-right">
-                      <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md">מחוון בגרות</div>
-                      <p className="text-green-950 font-black text-sm leading-relaxed whitespace-pre-line">{q.rubric}</p>
-                    </div>
-                  </div>
-
-                  <button 
-                    onClick={handleNextQ} 
-                    className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-xl flex items-center justify-center gap-2 border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm"
-                  >
-                    {qIndex < questions.length - 1 ? 'לשרשור הבא' : 'סיום פרק'} <ArrowRight className="w-4 h-4 rotate-180" />
-                  </button>
-                </motion.div>
-              )}
+                 <div className={`${theme.bg} border-2 ${theme.border} p-4 rounded-2xl shadow-md relative h-full`}>
+                   <div className="absolute -top-3 -right-3 bg-green-800 text-white px-3 py-0.5 rounded-full text-[9px] font-black shadow-md uppercase">תשובת מומחה</div>
+                   <p className="text-green-900 font-black text-xs leading-relaxed whitespace-pre-line pt-2">{q.rubric}</p>
+                 </div>
+               </div>
+               
+               <button 
+                 onClick={handleNextQ} 
+                 className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-4 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm flex items-center justify-center gap-2"
+               >
+                 {qIndex < questions.length - 1 ? 'לשאלה הבאה' : 'סיום הפרק'} <ArrowRight className="w-4 h-4 rotate-180" />
+               </button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -1318,13 +1304,23 @@ function BagrutExam({ onFinish }: { onFinish: () => void }) {
               </div>
 
               {showClosedResult && (
-                <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="mt-3 p-3 bg-green-50 rounded-xl border border-green-200">
-                  <p className="text-green-950 font-bold leading-relaxed text-xs mb-3 italic">"{shuffledOptions[selectedClosed!].explanation}"</p>
+                <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="mt-4 bg-white border border-green-200 p-4 rounded-xl shadow-md space-y-3">
+                  <h4 className="text-xs font-black text-green-900 flex items-center gap-2">
+                     <Target className="w-4 h-4 text-green-700" /> ניתוח התשובות:
+                  </h4>
+                  <ul className="space-y-1.5">
+                    {[...currentQ.options].sort((a,b) => (a.isCorrect === b.isCorrect ? 0 : a.isCorrect ? -1 : 1)).map((opt: any, idx: number) => (
+                      <li key={idx} className={`p-2 rounded-lg border-r-4 flex gap-2 items-start text-[11px] ${opt.isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-300'}`}>
+                        <div className="pt-0.5">{opt.isCorrect ? <CheckCircle2 className="w-3.5 h-3.5 text-green-600"/> : <XCircle className="w-3.5 h-3.5 text-red-500"/>}</div>
+                        <span className="text-slate-900 font-bold leading-tight text-right">{opt.explanation}</span>
+                      </li>
+                    ))}
+                  </ul>
                   <button 
                     onClick={handleNext}
-                    className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-2.5 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm"
+                    className="w-full bg-green-800 hover:bg-green-900 text-white font-black py-3 rounded-xl shadow-lg border-b-4 border-green-950 active:border-b-0 active:translate-y-1 text-sm mt-2"
                   >
-                    המשך לשאלה הבאה
+                    המשך לשאלה הבאה <ArrowRight className="w-4 h-4 inline-block mr-2 rotate-180" />
                   </button>
                 </motion.div>
               )}
